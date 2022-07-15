@@ -1,0 +1,333 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| VP21MC046_college  |
+| information_schema |
++--------------------+
+2 rows in set (0.00 sec)
+
+mysql> use VP21MC046_college;
+Database changed
+mysql> create table branch(branchid varchar(20)PRIMARY KEY,branchname char(20)not null,HOD char(20));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table branch(branchid varchar(20)PRIMARY KEY,branchname char(20)not null,HOD char(20));
+ERROR 1050 (42S01): Table 'branch' already exists
+mysql> desc branch;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| branchid   | varchar(20) | NO   | PRI | NULL    |       |
+| branchname | char(20)    | NO   |     | NULL    |       |
+| HOD        | char(20)    | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> CREATE TABLE student(usn VARCHAR(10)PRIMARY KEY NOT NULL,name CHAR(20)NOTNULL,
+EY(branchid)REFERENCES branch(branchid));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NOTNULL,address CHAR(30)NOT NULL,sem int(10)NOT NULL,branchid VARCHAR(20),FOREIG' at line 1
+mysql> CREATE TABLE student(usn VARCHAR(10)PRIMARY KEY NOT NULL,name CHAR(20)NOT NULL,address CHAR(30)NOT NULL,sem int(10)NOT NULL,branchid VARCHAR(20),FOREIGN
+KEY(branchid)REFERENCES branch(branchid));
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> desc student
+    -> ^Cc
+c
+^C
+mysql> desc student;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| usn      | varchar(10) | NO   | PRI | NULL    |       |
+| name     | char(20)    | NO   |     | NULL    |       |
+| address  | char(30)    | NO   |     | NULL    |       |
+| sem      | int         | NO   |     | NULL    |       |
+| branchid | varchar(20) | YES  | MUL | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> create table author(authorid varchar(10)primary key not null,authorname varchar(20) not null,country char(20)not null,age int(3)not null);
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> desc author;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| authorid   | varchar(10) | NO   | PRI | NULL    |       |
+| authorname | varchar(20) | NO   |     | NULL    |       |
+| country    | char(20)    | NO   |     | NULL    |       |
+| age        | int         | NO   |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> create table book(bookid varchar(20)primary key not null,bookname char(20)not null,publisher varchar(20)not null,authorid varchar(20),foreign key(authorid)references author(authorid),branchid varchar(20),foreign key(branchid)references branch(branchid));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table borrow(usn varchar(10)not null,foreign key(usn)references usn(usn),bookid varchar(20),foreign key(bookid)references book(bookid));
+mysql> create table borrow(usn varchar(10)not null,foreign key(usn)references student(usn),bookid varchar(20),foreign key(bookid)references book
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc borrow;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| usn    | varchar(10) | NO   | MUL | NULL    |       |
+| bookid | varchar(20) | YES  | MUL | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> desc author;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| authorid   | varchar(10) | NO   | PRI | NULL    |       |
+| authorname | varchar(20) | NO   |     | NULL    |       |
+| country    | char(20)    | NO   |     | NULL    |       |
+| age        | int         | NO   |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc book;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| bookid    | varchar(20) | NO   | PRI | NULL    |       |
+| bookname  | char(20)    | NO   |     | NULL    |       |
+| publisher | varchar(20) | NO   |     | NULL    |       |
+| authorid  | varchar(20) | YES  | MUL | NULL    |       |
+| branchid  | varchar(20) | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+mysql> drop table borrow;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table borrow(usn varchar(20)not null,foreign key(usn)references student(usn),bookid varchar(20)not null,foreign key(bookid)references book(bookid),borrowed_date date);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc borrow;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| usn           | varchar(20) | NO   | MUL | NULL    |       |
+| bookid        | varchar(20) | NO   | MUL | NULL    |       |
+| borrowed_date | date        | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc branch;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| branchid   | varchar(20) | NO   | PRI | NULL    |       |
+| branchname | char(20)    | NO   |     | NULL    |       |
+| HOD        | char(20)    | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> insert into branch values("b1","mca","Dr.Vandana");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from branch;
++----------+------------+------------+
+| branchid | branchname | HOD        |
++----------+------------+------------+
+| b1       | mca        | Dr.Vandana |
++----------+------------+------------+
+1 row in set (0.00 sec)
+
+mysql> insert into branch values("b2","mba","Dr.Iyer");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into branch values("b3","cs","Prof.Krishna Mohan");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into branch values("b4","mech","Dr.Manujesh");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into branch values("b5","civil","Dr.Anand");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from branch;
++----------+------------+--------------------+
+| branchid | branchname | HOD                |
++----------+------------+--------------------+
+| b1       | mca        | Dr.Vandana         |
+| b2       | mba        | Dr.Iyer            |
+| b3       | cs         | Prof.Krishna Mohan |
+| b4       | mech       | Dr.Manujesh        |
+| b5       | civil      | Dr.Anand           |
++----------+------------+--------------------+
+5 rows in set (0.00 sec)
+
+mysql> desc student;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| usn      | varchar(10) | NO   | PRI | NULL    |       |
+| name     | char(20)    | NO   |     | NULL    |       |
+| address  | char(30)    | NO   |     | NULL    |       |
+| sem      | int         | NO   |     | NULL    |       |
+| branchid | varchar(20) | YES  | MUL | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into student values("4vp21mc035","rithesh","puttur",2,"b1");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values("4vp21mc032","puneeth","puttur",4,"b4");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values("4vp21mc033","rashmi","puttur",2,"b3");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values("4vp21mc036","mokshitha","puttur",1,"b5");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values("4vp21mc052","thanusha","puttur",3,"b2");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values("4vp21mc040","sandya","puttur",2,"b1");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from student;
++------------+-----------+---------+-----+----------+
+| usn        | name      | address | sem | branchid |
++------------+-----------+---------+-----+----------+
+| 4vp21mc032 | puneeth   | puttur  |   4 | b4       |
+| 4vp21mc033 | rashmi    | puttur  |   2 | b3       |
+| 4vp21mc035 | rithesh   | puttur  |   2 | b1       |
+| 4vp21mc036 | mokshitha | puttur  |   1 | b5       |
+| 4vp21mc040 | sandya    | puttur  |   2 | b1       |
+| 4vp21mc052 | thanusha  | puttur  |   3 | b2       |
++------------+-----------+---------+-----+----------+
+6 rows in set (0.00 sec)
+
+mysql> desc author;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| authorid   | varchar(10) | NO   | PRI | NULL    |       |
+| authorname | varchar(20) | NO   |     | NULL    |       |
+| country    | char(20)    | NO   |     | NULL    |       |
+| age        | int         | NO   |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into author values("1a","Ramez Elmasri","Alinthon",51);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into author values("2a","Baidyanath Mishra","India",52);
+Query OK, 1 row affected (0.01 sec)
+mysql> insert into book values("BK2","Research Methodology","pearson","2a","b2");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into book values("BK2","Data Structure","MC Graw Hill","3a","b3");
+ERROR 1062 (23000): Duplicate entry 'BK2' for key 'book.PRIMARY'
+mysql> insert into book values("BK3","Data Structure","MC Graw Hill","3a","b3");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into book values("BK3","Data Structure","MC Graw Hill","3a","b3");
+ERROR 1062 (23000): Duplicate entry 'BK3' for key 'book.PRIMARY'
+mysql> insert into book values("BK4","Thermo Dynamics","Taylor","5a","b5");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into book values("BK4","MC Graw Hill","Taylor","4a","b4");
+ERROR 1062 (23000): Duplicate entry 'BK4' for key 'book.PRIMARY'
+mysql> insert into book values("BK5","MC Graw Hill","Taylor","4a","b4");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into book values("BK6","Algorithms","MC Graw Hill","3a","b3");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into book values("BK7","ArtiIntelligence","MC Graw Hill","4a","b4");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from book;
++--------+----------------------+--------------+----------+----------+
+| bookid | bookname             | publisher    | authorid | branchid |
++--------+----------------------+--------------+----------+----------+
+| BK1    | DBMS                 | pearson      | 1a       | b1       |
+| BK2    | Research Methodology | pearson      | 2a       | b2       |
+| BK3    | Data Structure       | MC Graw Hill | 3a       | b3       |
+| BK4    | Thermo Dynamics      | Taylor       | 5a       | b5       |
+| BK5    | MC Graw Hill         | Taylor       | 4a       | b4       |
+| BK6    | Algorithms           | MC Graw Hill | 3a       | b3       |
+| BK7    | ArtiIntelligence     | MC Graw Hill | 4a       | b4       |
++--------+----------------------+--------------+----------+----------+
+7 rows in set (0.00 sec)
+
+mysql> desc borrow;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| usn           | varchar(20) | NO   | MUL | NULL    |       |
+| bookid        | varchar(20) | NO   | MUL | NULL    |       |
+| borrowed_date | date        | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> select*from student;
++------------+-----------+---------+-----+----------+
+| usn        | name      | address | sem | branchid |
++------------+-----------+---------+-----+----------+
+| 4vp21mc032 | puneeth   | puttur  |   4 | b4       |
+| 4vp21mc033 | rashmi    | puttur  |   2 | b3       |
+| 4vp21mc035 | rithesh   | puttur  |   2 | b1       |
+| 4vp21mc036 | mokshitha | puttur  |   1 | b5       |
+| 4vp21mc040 | sandya    | puttur  |   2 | b1       |
+| 4vp21mc052 | thanusha  | puttur  |   3 | b2       |
++------------+-----------+---------+-----+----------+
+6 rows in set (0.00 sec)
+
+mysql> insert into borrow values("4vp21mc032","BK1",'2004-01-01');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into borrow values("4vp21mc032","BK1",'2022-01-01');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into borrow values("4vp21mc035","BK2",'2022-03-01');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into borrow values("4vp21mc035","BK3",'2022-04-04');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into borrow values("4vp21mc036","BK6",'2022-05-05');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into borrow values("4vp21mc040","BK7",'2020-07-05');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into borrow values("4vp21mc035","BK7",'2020-07-05');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into borrow values("4vp21mc032","BK6",'2022-05-05');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into borrow values("4vp21mc0340","BK6",'2022-05-05');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`VP21MC046_college`.`borrow`, CONSTRAINT `borrow_ibfk_1` FOREIGN KEY (`usn`) REFERENCES `student` (`usn`))
+mysql> insert into borrow values("4vp21mc040","BK6",'2022-05-05');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from borrow;
++------------+--------+---------------+
+| usn        | bookid | borrowed_date |
++------------+--------+---------------+
+| 4vp21mc032 | BK1    | 2004-01-01    |
+| 4vp21mc032 | BK1    | 2022-01-01    |
+| 4vp21mc035 | BK2    | 2022-03-01    |
+| 4vp21mc035 | BK3    | 2022-04-04    |
+| 4vp21mc036 | BK6    | 2022-05-05    |
+| 4vp21mc040 | BK7    | 2020-07-05    |
+| 4vp21mc035 | BK7    | 2020-07-05    |
+| 4vp21mc032 | BK6    | 2022-05-05    |
+| 4vp21mc040 | BK6    | 2022-05-05    |
++------------+--------+---------------+
+9 rows in set (0.00 sec)
+
+mysql> insert into borrow values("4vp21mc040","BK5",'2022-05-05');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> 
+
+
