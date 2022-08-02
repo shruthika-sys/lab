@@ -1,0 +1,72 @@
+mysql> select count(authorid)from book group by authorid;
++-----------------+
+| count(authorid) |
++-----------------+
+|               1 |
+|               1 |
+|               2 |
+|               2 |
+|               1 |
++-----------------+
+5 rows in set (0.00 sec)
+
+
+
+mysql> select author.authorname,count(*),book.authorid from author,book where author.authorid=book.authorid  group by authorid;
++-------------------+----------+----------+
+| authorname        | count(*) | authorid |
++-------------------+----------+----------+
+| Ramez Elmasri     |        1 | 1a       |
+| Baidyanath Mishra |        1 | 2a       |
+| Ellis Horwitz     |        2 | 3a       |
+| Ellis Horwitz     |        2 | 4a       |
+| Deepak Kehamani   |        1 | 5a       |
++-------------------+----------+----------+
+5 rows in set (0.00 sec)
+
+
+mysql> select usn from student where usn in(select usn from borrow where student.usn=borrow.usn group by borrow.usn having count(borrow.usn)>2);
++------------+
+| usn        |
++------------+
+| 4vp21mc035 |
+| 4vp21mc040 |
+| 4vp21mc032 |
++------------+
+3 rows in set (0.00 sec)
+
+
+
+mysql> select * from student s  where exists (select br.usn from borrow br,book bk where br.bookid=bk.bookid and br.usn=s.usn group by usn having count(distinct authorid)>1);
++------------+---------+---------+-----+----------+
+| usn        | name    | address | sem | branchid |
++------------+---------+---------+-----+----------+
+| 4vp21mc032 | puneeth | puttur  |   4 | b4       |
+| 4vp21mc035 | rithesh | puttur  |   2 | b1       |
+| 4vp21mc040 | sandya  | puttur  |   2 | b1       |
++------------+---------+---------+-----+----------+
+3 rows in set (0.00 sec)
+
+
+
+
+mysql> create table student (usn varchar(20)primary key not null, name varchar(20)not null, date_of_birth date not null, branch varchar(20)not null, mark1 int(3)not null, mark2 int(3)not null, mark3 int(3)not null, total float not null, GPA  float not null);
+Query OK, 0 rows affected, 3 warnings (0.02 sec)
+
+mysql> desc student;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| usn           | varchar(20) | NO   | PRI | NULL    |       |
+| name          | varchar(20) | NO   |     | NULL    |       |
+| date_of_birth | date        | NO   |     | NULL    |       |
+| branch        | varchar(20) | NO   |     | NULL    |       |
+| mark1         | int         | NO   |     | NULL    |       |
+| mark2         | int         | NO   |     | NULL    |       |
+| mark3         | int         | NO   |     | NULL    |       |
+| total         | float       | NO   |     | NULL    |       |
+| GPA           | float       | NO   |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+
