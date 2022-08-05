@@ -1,0 +1,153 @@
+student table;
+
+mysql> desc student;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| usn           | varchar(20) | NO   | PRI | NULL    |       |
+| name          | varchar(20) | NO   |     | NULL    |       |
+| date_of_birth | date        | NO   |     | NULL    |       |
+| branch        | varchar(20) | NO   |     | NULL    |       |
+| mark1         | int         | NO   |     | NULL    |       |
+| mark2         | int         | NO   |     | NULL    |       |
+| mark3         | int         | NO   |     | NULL    |       |
+| total         | float       | NO   |     | NULL    |       |
+| GPA           | float       | NO   |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+9 rows in set (0.01 sec)
+
+change datatype(notnull)
+mysql> alter table student
+    -> modify mark1 int;
+    
+    
+Insert values:
+mysql> insert into student(usn,name,date_of_birth,branch)values("1001","raj",'1999-04-11',"mca");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student(usn,name,date_of_birth,branch)values("1002","AjITH",'1999-04-11',"mca");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student(usn,name,date_of_birth,branch)values("1003","PALLAVI",'1999-04-11',"MBA");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student(usn,name,date_of_birth,branch)values("1004","SHRADDA",'2000-04-11',"MBA");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select*from student;
++------+---------+---------------+--------+-------+-------+-------+-------+------+
+| usn  | name    | date_of_birth | branch | mark1 | mark2 | mark3 | total | GPA  |
++------+---------+---------------+--------+-------+-------+-------+-------+------+
+| 1001 | raj     | 1999-04-11    | mca    |  NULL |  NULL |  NULL |  NULL | NULL |
+| 1002 | AjITH   | 1999-04-11    | mca    |  NULL |  NULL |  NULL |  NULL | NULL |
+| 1003 | PALLAVI | 1999-04-11    | MBA    |  NULL |  NULL |  NULL |  NULL | NULL |
+| 1004 | SHRADDA | 2000-04-11    | MBA    |  NULL |  NULL |  NULL |  NULL | NULL |
++------+---------+---------------+--------+-------+-------+-------+-------+------+
+
+Update the marks:
+
+mysql> update student set mark1=50,mark2=70,mark3=60 where usn="1001";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set mark1=50,mark2=7,mark3=60 where usn="1002";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set mark1=50,mark2=70,mark3=60 where usn="1001";
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+mysql> update student set mark1=50,mark2=70,mark3=66 where usn="1003";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set mark1=55,mark2=70,mark3=66 where usn="1004";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set mark1=55,mark2=77,mark3=66 where usn="100";
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> update student set TOTAL=mark1+mark2+mark3;
+Query OK, 4 rows affected (0.00 sec)
+Rows matched: 5  Changed: 4  Warnings: 0
+
+Update the total marks:
+mysql> update student set TOTAL=mark1+mark2+mark3;
+
+update GPA;
+mysql> update student set GPA=(total/3);
+
+ysql> select*from student;
++------+---------+---------------+--------+-------+-------+-------+-------+------+
+| usn  | name    | date_of_birth | branch | mark1 | mark2 | mark3 | total | GPA  |
++------+---------+---------------+--------+-------+-------+-------+-------+------+
+| 1001 | raj     | 1999-04-11    | mca    |    50 |    70 |    60 |   180 |   60 |
+| 1002 | AjITH   | 1999-04-11    | mca    |    50 |     7 |    60 |   117 |   39 |
+| 1003 | PALLAVI | 1999-04-11    | MBA    |    50 |    70 |    66 |   186 |   62 |
+| 1004 | SHRADDA | 2000-04-11    | MBA    |    55 |    70 |    66 |   191 |   64 |
+| 1005 | Akshar  | 2000-04-11    | MBA    |    55 |    77 |    66 |   198 |   66 |
++------+---------+---------------+--------+-------+-------+-------+-------+------+
+5 rows in set (0.00 sec)
+
+
+DOB:
+mysql> select name, year(date_of_birth)from student;
++---------+---------------------+
+| name    | year(date_of_birth) |
++---------+---------------------+
+| raj     |                1999 |
+| AjITH   |                1999 |
+| PALLAVI |                1999 |
+| SHRADDA |                2000 |
+| Akshar  |                2000 |
++---------+---------------------+
+BRANCH:
+
+mysql> select name,branch from student;
++---------+--------+
+| name    | branch |
++---------+--------+
+| raj     | mca    |
+| AjITH   | mca    |
+| PALLAVI | MBA    |
+| SHRADDA | MBA    |
+| Akshar  | MBA    |
++---------+--------+
+5 rows in set (0.01 sec)
+
+mysql> select name from student where name like"s%";
++---------+
+| name    |
++---------+
+| SHRADDA |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select name from student where name like"%ar";
++--------+
+| name   |
++--------+
+| Akshar |
++--------+
+1 row in set (0.00 sec)
+
+mysql> delete from student where usn="1001";
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select*from student;
++------+---------+---------------+--------+-------+-------+-------+-------+------+
+| usn  | name    | date_of_birth | branch | mark1 | mark2 | mark3 | total | GPA  |
++------+---------+---------------+--------+-------+-------+-------+-------+------+
+| 1002 | AjITH   | 1999-04-11    | mca    |    50 |     7 |    60 |   117 |   39 |
+| 1003 | PALLAVI | 1999-04-11    | MBA    |    50 |    70 |    66 |   186 |   62 |
+| 1004 | SHRADDA | 2000-04-11    | MBA    |    55 |    70 |    66 |   191 |   64 |
+| 1005 | Akshar  | 2000-04-11    | MBA    |    55 |    77 |    66 |   198 |   66 |
++------+---------+---------------+--------+-------+-------+-------+-------+------+
+4 rows in set (0.00 sec)
+
+
+
+

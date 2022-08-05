@@ -1,0 +1,112 @@
+team:
+mysql> desc team;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| tid        | varchar(10) | NO   | PRI | NULL    |       |
+| tname      | char(20)    | NO   |     | NULL    |       |
+| coach      | char(20)    | NO   |     | NULL    |       |
+| captain_id | varchar(20) | YES  | MUL | NULL    |       |
+| city       | char(20)    | NO   |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+Modify:
+mysql> alter table team modify captain_id varchar(20);
+
+Inserting values:
+mysql> insert into team(tid,tname,coach,city) values("1002","kJ","Atharv","mangalore");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into team(tid,tname,coach,city) values("1003","cc","Bagath","mangalore");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into team(tid,tname,coach,city) values("1004","cc","Dhoni","Bangalore");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into team(tid,tname,coach,city) values("123","rcb","sunil","Bangalore");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> delete from team where tid="1004";
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into team(tid,tname,coach,city) values("124","csk","laxman","chennai");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> desc player;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| pid   | varchar(20) | NO   | PRI | NULL    |       |
+| pname | char(20)    | NO   |     | NULL    |       |
+| age   | int         | NO   |     | NULL    |       |
+| tid   | varchar(10) | YES  | MUL | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into player(pid,pname,age,tid) values("1","sachin",33,"123");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into player(pid,pname,age,tid) values("2","dravid",32,"124");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into player(pid,pname,age,tid) values("3","dhoni",30,"124");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into player(pid,pname,age,tid) values("4","raina",30,"125");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into player(pid,pname,age,tid) values("5","kohli",23,"126");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select*from player;
++-----+--------+-----+------+
+| pid | pname  | age | tid  |
++-----+--------+-----+------+
+| 1   | sachin |  33 | 123  |
+| 2   | dravid |  32 | 124  |
+| 3   | dhoni  |  30 | 124  |
+| 4   | raina  |  30 | 125  |
+| 5   | kohli  |  23 | 126  |
++-----+--------+-----+------+
+5 rows in set (0.00 sec)
+
+mysql> desc stadium;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| sid     | varchar(10) | NO   | PRI | NULL    |       |
+| sname   | char(20)    | NO   |     | NULL    |       |
+| pincode | int         | NO   |     | NULL    |       |
+| city    | char(20)    | NO   |     | NULL    |       |
+| area    | char(20)    | NO   |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into stadium(sid,sname,pincode,city,area) values("111","chinnaswamy",56001,"bangalore",mgroad);
+ERROR 1054 (42S22): Unknown column 'mgroad' in 'field list'
+mysql> insert into stadium(sid,sname,pincode,city,area) values("111","chinnaswamy",56001,"bangalore","mgroad");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into stadium(sid,sname,pincode,city,area) values("222","kotla",56001,"delhi","highway");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into stadium(sid,sname,pincode,city,area) values("333","International",8801,"chennai","Tr nagar");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into stadium(sid,sname,pincode,city,area) values("444","ksca",56098,"bangalore","peenya");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from stadium;
++-----+---------------+---------+-----------+------------+
+| sid | sname         | pincode | city      | area       |
++-----+---------------+---------+-----------+------------+
+| 111 | chinnaswamy   |   56001 | bangalore | mgroad     |
+| 222 | kotla         |   56001 | delhi     | highway    |
+| 333 | International |    8801 | chennai   | Tr nagar   |
+| 444 | ksca          |   56098 | bangalore | peenya     |
+| 555 | csca          |  609035 | cocchin   | beach road |
++-----+---------------+---------+-----------+------------+
+5 rows in set (0.00 sec)
+
+

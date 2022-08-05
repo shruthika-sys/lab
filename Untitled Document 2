@@ -1,0 +1,53 @@
+mysql> select*from branch,student
+    -> where student.sem=2 and branch.branchname="mca";
+mysql> select*from student as s,branch as b
+    -> where s.sem=2 and b.branchname="mca";
+mysql> alter table team
+    -> add foreign key(captain_id)references player(pid);
+select branchname,name from branch,student where student.sem=2 and branch.branchname="mca";
+
+mysql> select * from student where sem=2 and branchid in(select branchid from branch where branchname="mca");
+select * from student where usn not in(select usn from borrow);
+
+select bookname from book order by bookname desc;
+
+select student.usn,student.name, branch.branchname,book.bookname,author.authorname,borrow.borrowed_date from student, branch,book,author,borrow where student.branchid=branch.branchid and branch.branchid=book.branchid and book.authorid=author.authorid and student.usn=borrow.usn and student.sem=2 and branch.branchname="mca";
+
+mysql> select bookname from book order by bookname desc;
++----------------------+
+| bookname             |
++----------------------+
+| Thermo Dynamics      |
+| Research Methodology |
+| MC Graw Hill         |
+| DBMS                 |
+| Data Structure       |
+| ArtiIntelligence     |
+| Algorithms           |
++----------------------+
+7 rows in set (0.01 sec)
+
+mysql> select * from student where usn not in(select usn from borrow);
++------------+----------+---------+-----+----------+
+| usn        | name     | address | sem | branchid |
++------------+----------+---------+-----+----------+
+| 4vp21mc033 | rashmi   | puttur  |   2 | b3       |
+| 4vp21mc052 | thanusha | puttur  |   3 | b2       |
++------------+----------+---------+-----+----------+
+
+
+
+select student.usn,student.name, branch.branchname,book.bookname,author.authorname,borrow.borrowed_date from student, branch,book,author,borrow where student.branchid=branch.branchid and branch.branchid=book.branchid and book.authorid=author.authorid and student.usn=borrow.usn and student.sem=2 and branch.branchname="mca";
++------------+---------+------------+----------+---------------+---------------+
+| usn        | name    | branchname | bookname | authorname    | borrowed_date |
++------------+---------+------------+----------+---------------+---------------+
+| 4vp21mc035 | rithesh | mca        | DBMS     | Ramez Elmasri | 2022-03-01    |
+| 4vp21mc035 | rithesh | mca        | DBMS     | Ramez Elmasri | 2022-04-04    |
+| 4vp21mc035 | rithesh | mca        | DBMS     | Ramez Elmasri | 2020-07-05    |
+| 4vp21mc040 | sandya  | mca        | DBMS     | Ramez Elmasri | 2020-07-05    |
+| 4vp21mc040 | sandya  | mca        | DBMS     | Ramez Elmasri | 2022-05-05    |
+| 4vp21mc040 | sandya  | mca        | DBMS     | Ramez Elmasri | 2022-05-05    |
++------------+---------+------------+----------+---------------+---------------+
+6 rows in set (0.00 sec)
+
+
