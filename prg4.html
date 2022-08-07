@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        label 
+        {
+            display:block;
+            margin: 20px;
+            font-size: 20px;
+
+        }
+    </style>
+
+<script>
+var a=0,o=0,b=0;
+function add()
+{
+    if(document.getElementById("tapple").checked)
+    a=parseInt(document.getElementById("tapple").value)*parseInt(document.getElementById("tapple").value);
+    else
+    a=0;
+
+    if(document.getElementById("torange").checked)
+    o=parseInt(document.getElementById("torange").value)*parseInt(document.getElementById("torange").value);
+    else
+    o=0;
+
+    if(document.getElementById("tbanana").checked)
+    b=parseInt(document.getElementById("tbanana").value)*parseInt(document.getElementById("tbanana").value);
+    else
+    b=0;
+    document.getElementById("res").innerHTML="<h2>Total is $"+(a+o+b)/100;
+}
+function findsum()
+{
+    var gt=(a+o+b)/100*1.05;
+    alert("The total cost is $"+gt);
+}
+</script>
+
+</head>
+<body>
+<form action="">    
+<label for="tapple"><input onclick="add()" type="checkbox" name="tapple" id="tapple" value="59">Apple(59 Cents)</label>
+<label for="torange"><input onclick="add()" type="checkbox" name="orange" id="torange" value="59">orange(49 Cents)</label>
+<label for="tbanana"><input onclick="add()" type="checkbox" name="tbanana" id="tbanana" value="59">banana(39 Cents)</label>
+<div id="res">$0</div>
+<input type="submit" value="submit" onclick="return findsum();">
+</form>
+
+</body>
+</html>
