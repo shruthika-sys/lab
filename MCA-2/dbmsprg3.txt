@@ -1,0 +1,249 @@
+STADIUM:
+ 
+ alter table TEAM
+    -> modify captainId varchar(20);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc TEAM;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| TID       | varchar(20) | NO   | PRI | NULL    |       |
+| Tname     | varchar(30) | NO   |     | NULL    |       |
+| COACH     | varchar(30) | NO   |     | NULL    |       |
+| captainId | varchar(20) | YES  | MUL | NULL    |       |
+| CITY      | varchar(30) | NO   |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+insert into TEAM(TID,Tname,COACH,CITY)values("123","rcb","sunil","banglore");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into TEAM(TID,Tname,COACH,CITY)values("124","CSK","laxman","chennai");
+insert into TEAM(TID,Tname,COACH,CITY)values("125","Royals","singh","rajasthan");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into TEAM(TID,Tname,COACH,CITY)values("126","daredevils","setwag","delhi");
+Query OK, 1 row affected (0.00 sec)
+select * from TEAM;
++-----+------------+--------+-----------+-----------+
+| TID | Tname      | COACH  | captainId | CITY      |
++-----+------------+--------+-----------+-----------+
+| 123 | rcb        | sunil  | NULL      | banglore  |
+| 124 | CSK        | laxman | NULL      | chennai   |
+| 125 | Royals     | singh  | NULL      | rajasthan |
+| 126 | daredevils | setwag | NULL      | delhi     |
++-----+------------+--------+-----------+-----------+
+4 rows in set (0.00 sec)
+
+desc PLAYER;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| PID   | varchar(20) | NO   | PRI | NULL    |       |
+| PNAME | varchar(30) | NO   |     | NULL    |       |
+| AGE   | int         | NO   |     | NULL    |       |
+| TID   | varchar(20) | YES  | MUL | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into PLAYER values("1","sachin",33,"123");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into PLAYER values("2","dravid",32,"124");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into PLAYER values("3","dhoni",30,"124");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into PLAYER values("4","raina",30,"125");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into PLAYER values("5","kohli",23,"126");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from PLAYER;
++-----+--------+-----+------+
+| PID | PNAME  | AGE | TID  |
++-----+--------+-----+------+
+| 1   | sachin |  33 | 123  |
+| 2   | dravid |  32 | 124  |
+| 3   | dhoni  |  30 | 124  |
+| 4   | raina  |  30 | 125  |
+| 5   | kohli  |  23 | 126  |
++-----+--------+-----+------+
+5 rows in set (0.00 sec)
+
+
+DESC STADIUM;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| SID     | varchar(20) | NO   | PRI | NULL    |       |
+| SNAME   | varchar(30) | NO   |     | NULL    |       |
+| PINCODE | int         | NO   |     | NULL    |       |
+| CITY    | varchar(30) | NO   |     | NULL    |       |
+| AREA    | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into STADIUM values("111","chinnaswamy",56001,"banglore","mgroad");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into STADIUM values("222","kotla",56001,"delhi","highway");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into STADIUM values("333","International",88001,"chennai","Tr Nagar");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into STADIUM values("444","KSCA",56098,"banglore","peenya");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into STADIUM values("555","CSCA",609035,"coachin","beach road");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from STADIUM;
++-----+---------------+---------+----------+------------+
+| SID | SNAME         | PINCODE | CITY     | AREA       |
++-----+---------------+---------+----------+------------+
+| 111 | chinnaswamy   |   56001 | banglore | mgroad     |
+| 222 | kotla         |   56001 | delhi    | highway    |
+| 333 | International |   88001 | chennai  | Tr Nagar   |
+| 444 | KSCA          |   56098 | banglore | peenya     |
+| 555 | CSCA          |  609035 | coachin  | beach road |
++-----+---------------+---------+----------+------------+
+5 rows in set (0.00 sec)
+
+
+update TEAM set captainId="2" where TID="126";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update TEAM set captainId="4" where TID="125";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update TEAM set captainId="3" where TID="124";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update TEAM set captainId="1" where TID="123";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from TEAM;
++-----+------------+--------+-----------+-----------+
+| TID | Tname      | COACH  | captainId | CITY      |
++-----+------------+--------+-----------+-----------+
+| 123 | rcb        | sunil  | 1         | banglore  |
+| 124 | CSK        | laxman | 3         | chennai   |
+| 125 | Royals     | singh  | 4         | rajasthan |
+| 126 | daredevils | setwag | 2         | delhi     |
++-----+------------+--------+-----------+-----------+
+4 rows in set (0.00 sec)
+
+
+
+insert into MATCHES values("m01",'2010-01-17','10',"111","123","124","123","5");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from MATCHES;
++-----+------------+----------+------+---------+----------+-----------------+--------------+
+| MID | MDATE      | TIME     | SID  | TEAM_ID | TEAM2_ID | WINNING_TEAM_ID | MAN_OF_MATCH |
++-----+------------+----------+------+---------+----------+-----------------+--------------+
+| m01 | 2010-01-17 | 00:00:10 | 111  | 123     | 124      | 123             | 5            |
++-----+------------+----------+------+---------+----------+-----------------+--------------+
+1 row in set (0.00 sec)
+
+mysql> insert into MATCHES values("m02",'2011-05-27','11',"222","125","126","125","2");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into MATCHES values("m03",'2012-08-09','2',"444","124","126","126","4");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into MATCHES values("m04",'2013-06-18','11',"111","125","123","123","1");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from MATCHES;
++-----+------------+----------+------+---------+----------+-----------------+--------------+
+| MID | MDATE      | TIME     | SID  | TEAM_ID | TEAM2_ID | WINNING_TEAM_ID | MAN_OF_MATCH |
++-----+------------+----------+------+---------+----------+-----------------+--------------+
+| m01 | 2010-01-17 | 00:00:10 | 111  | 123     | 124      | 123             | 5            |
+| m02 | 2011-05-27 | 00:00:11 | 222  | 125     | 126      | 125             | 2            |
+| m03 | 2012-08-09 | 00:00:02 | 444  | 124     | 126      | 126             | 4            |
+| m04 | 2013-06-18 | 00:00:11 | 111  | 125     | 123      | 123             | 1            |
++-----+------------+----------+------+---------+----------+-----------------+--------------+
+4 rows in set (0.00 sec)
+
+
+alter table PLAYER_PHONE modify PHONE varchar(12);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc PLAYER_PHONE;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| PID   | varchar(20) | NO   | MUL | NULL    |       |
+| PHONE | varchar(12) | NO   | PRI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into PLAYER_PHONE values("1","8547441214");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into PLAYER_PHONE values("2","7745124541");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into PLAYER_PHONE values("2","8856225252");
+Query OK, 1 row affected (0.00 sec)
+insert into PLAYER_PHONE values("3","9965232252");
+Query OK, 1 row affected (0.00 sec)
+
+
+mysql> select * from PLAYER_PHONE;
++-----+------------+
+| PID | PHONE      |
++-----+------------+
+| 1   | 8547441214 |
+| 2   | 7745124541 |
+| 2   | 8856225252 |
++-----+------------+
+
+i. Display the youngest player (in terms of age) Name, Team name, age in which he belongs of
+the tournament.
+select PNAME,Tname,AGE from PLAYER p,TEAM t where p.TID=t.TID and AGE=(select min(age)from PLAYER);
++-------+------------+-----+
+| PNAME | Tname      | AGE |
++-------+------------+-----+
+| kohli | daredevils |  23 |
++-------+------------+-----+
+1 row in set (0.00 sec)
+
+ii. List the details of the stadium where the maximum number of matches were played.
+select * from STADIUM where SID =(select SID from MATCHES group by SID order by count(*) desc limit  1);
++-----+-------------+---------+----------+--------+
+| SID | SNAME       | PINCODE | CITY     | AREA   |
++-----+-------------+---------+----------+--------+
+| 111 | chinnaswamy |   56001 | banglore | mgroad |
++-----+-------------+---------+----------+--------+
+1 row in set (0.00 sec)
+OR
+select * from STADIUM where SID =(select SID from MATCHES group by SID order by count(SID) desc limit 1);
++-----+-------------+---------+----------+--------+
+| SID | SNAME       | PINCODE | CITY     | AREA   |
++-----+-------------+---------+----------+--------+
+| 111 | chinnaswamy |   56001 | banglore | mgroad |
++-----+-------------+---------+----------+--------+
+1 row in set (0.00 sec)
+
+ iii. List the details of the player who is not a captain but got the man_of _match award at least
+in two matches.
+select * from PLAYER where PID not in(select captainId from TEAM)and PID IN(select MAN_OF_MATCH from MATCHES group by MAN_OF_MATCH having count(MAN_OF_MATCH)=2);
++-----+-------+-----+------+
+| PID | PNAME | AGE | TID  |
++-----+-------+-----+------+
+| 5   | kohli |  23 | 126  |
++-----+-------+-----+------+
+1 row in set (0.00 sec)
