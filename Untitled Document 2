@@ -11,7 +11,9 @@ select * from student where usn not in(select usn from borrow);
 
 select bookname from book order by bookname desc;
 
-select student.usn,student.name, branch.branchname,book.bookname,author.authorname,borrow.borrowed_date from student, branch,book,author,borrow where student.branchid=branch.branchid and branch.branchid=book.branchid and book.authorid=author.authorid and student.usn=borrow.usn and student.sem=2 and branch.branchname="mca";
+select student.usn,student.name, branch.branchname,book.bookname,author.authorname,borrow.borrowed_date from student, 
+branch,book,author,borrow where student.branchid=branch.branchid and branch.branchid=book.branchid 
+and book.authorid=author.authorid and student.usn=borrow.usn and student.sem=2 and branch.branchname="mca";
 
 mysql> select bookname from book order by bookname desc;
 +----------------------+
