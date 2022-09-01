@@ -286,8 +286,99 @@ mysql> select*from tourist_place
 
 
 iii. List the details of tourists visited all tourist places of the state “KARNATAKA”.
+
+mysql> select*from tourist where tid in(select tid from visits,tourist_place where visits.tpid=tourist_place.tpid and state="karnataka" group
+by tid having count(state)in(select count(state)from tourist_place where state="karnataka"));
++------+-------+-----+---------+
+| tid  | name  | age | country |
++------+-------+-----+---------+
+| t001 | sagar |  45 | india   |
++------+-------+-----+---------+(VISITI THE PLACE ONE TIME).
+
+mysql> select*from tourist where tid in(select tid from visits,tourist_place where visits.tpid=tourist_place.tpid and state="karnataka" group
+by tid having count(distinct tourist_place.tpid)in(select count(tpid)from tourist_place where state="karnataka"));
++------+-------+-----+---------+
+| tid  | name  | age | country |
++------+-------+-----+---------+
+| t001 | sagar |  45 | india   |
++------+-------+-----+---------+(VISIT BY THE PERSON MORE THAN ONE TIME)
+
+
+
 iv. Display the details of the tourists visited at least one tourist place of the state, but visited
 all states tourist places.
+
+mysql> select * from tourist where tid in(select tid from visits,tourist_place where visits.tpid=tourist_place.tpid group by tid having count(distinct state)in(select count(distinct state)from tourist_place));
++------+----------+-----+------------+
+| tid  | name     | age | country    |
++------+----------+-----+------------+
+| t001 | sagar    |  45 | india      |
+| t006 | shraddha |  35 | singaphore |
++------+----------+-----+------------+
+2 rows in set (0.00 sec)
+
+
+
+
 v. Display the details of the tourist place visited by the tourists of all country.
+
+mysql> select*from tourist_place where tpid in(select tpid from visits,tourist where visits.tid=tourist.tid group by tpid having count(distinct country)=(select count(distinct country)from tourist));
++------+--------+----------+-----+---------+
+| tpid | name   | state    | KM  | history |
++------+--------+----------+-----+---------+
+| 1008 | shimla | kashmira | 900 | snow    |
++------+--------+----------+-----+---------+
+1 row in set (0.00 sec)
+
+**************ELECTION********************
+
+costituency:
+
+mysql> create table costituencey(consid number(20)primary key,csname varchar(20),cstate varchar?(20),;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'number(20)primary key,csname varchar(20),cstate varchar?(20),' at line 1
+mysql> create database VP21MC046_ELECTION;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> desc costituencey;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| consid       | int         | NO   | PRI | NULL    |       |
+| csname       | varchar(20) | YES  |     | NULL    |       |
+| cstate       | varchar(20) | YES  |     | NULL    |       |
+| no_of_voters | int         | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+
+*************party***********
+mysql> create table party(pid int(10)primary key,pname varchar(20),psymbol varchar(10));
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+
+mysql> desc party;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| pid     | int         | NO   | PRI | NULL    |       |
+| pname   | varchar(20) | YES  |     | NULL    |       |
+| psymbol | varchar(10) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+*********
+
+**************candidates*********
+mysql> create table candidates(candid int(12)primary key not null,phone_no char(12),age int(3),state varchar(20),name varchar(20),pid int(10),foreign key(pid)references party(pid));
+Query OK, 0 rows affected, 3 warnings (0.03 sec)
+
+mysql> desc candidates;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| candid   | int         | NO   | PRI | NULL    |       |
+| phone_no | char(12)    | YES  |     | NULL    |       |
+| age      | int         | YES  |     | NULL    |       |
+| state    | varchar(20) | YES  |     | NULL    |       |
+| name     | varchar(20) | YES  |     | NULL    |       |
+| pid      | int         | YES  | MUL | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
 
 
