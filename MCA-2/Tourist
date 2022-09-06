@@ -1,0 +1,507 @@
+ysql> create table tourist(tid varchar(20)primary key not null,name char(20)not null,age int(3)not null,country char(20)not null);
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql> desc tourist;
+
+
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| tid     | varchar(20) | NO   | PRI | NULL    |       |
+| name    | char(20)    | NO   |     | NULL    |       |
+| age     | int         | NO   |     | NULL    |       |
+| country | char(20)    | NO   |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table tourist_place(tpid varchar(20)primary key not null,name char(20)not null,state char(20)not null,KM int(10)not null,history char(30)not null);
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> select*from tourist_place;
++------+---------------+-----------+-----+---------------+
+| tpid | name          | state     | KM  | history       |
++------+---------------+-----------+-----+---------------+
+| 1001 | mysore_palace | karnataka | 300 | palace        |
+| 1002 | jog_falls     | karnataka | 200 | Falls         |
+| 1003 | Ranganatittu  | karnataka | 500 | Birds Viewing |
+| 1004 | Thajmahal     | Delhi     | 800 | mahal         |
+| 1005 | RedFort       | Delhi     | 800 | fort          |
+| 1006 | lotus temple  | Delhi     | 900 | temple        |
+| 1007 | agonda        | goa       | 900 | beech         |
+| 1008 | shimla        | kashmira  | 900 | snow          |
+| 1009 | hampi         | karnataka | 200 | fort          |
+| 1010 | fort          | delhi     | 200 | fort          |
++------+---------------+-----------+-----+---------------+
+10 rows in set (0.00 sec)
+
+
+
+
+mysql> desc tourist_place;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| tpid    | varchar(20) | NO   | PRI | NULL    |       |
+| name    | char(20)    | NO   |     | NULL    |       |
+| state   | char(20)    | NO   |     | NULL    |       |
+| KM      | int         | NO   |     | NULL    |       |
+| history | char(30)    | NO   |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> create table visits(tid varchar(20)not null,tpid varchar(20)not null,vdate date,foreign key(tid)references tourist(tid),foreign key(tpid)references tourist_place(tpid));
+Query OK, 0 rows affected (0.03 sec)
+
+
+
+
+mysql> desc visits;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| tid   | varchar(20) | NO   | MUL | NULL    |       |
+| tpid  | varchar(20) | NO   | MUL | NULL    |       |
+| vdate | date        | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table emailid(tid varchar(20)not null,emailid varchar(20)not null,foreign key(tid)references tourist(tid));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc emailid;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| tid     | varchar(20) | NO   | MUL | NULL    |       |
+| emailid | varchar(20) | NO   |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+
+
+mysql> insert into tourist_place values("1001","mysore_palace","karnataka",300,"palace");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into tourist_place values("1002","jog_falls","karnataka",200,"Falls");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into tourist_place values("1003","Ranganatittu","karnataka",500,"Birds Viewing");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into tourist_place values("1004","Thajmahal","Delhi",800,"mahal");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into tourist_place values("1004","Thajmahal","Delhi",800,"mahal");
+ERROR 1062 (23000): Duplicate entry '1004' for key 'tourist_place.PRIMARY'
+mysql> insert into tourist_place values("1005","RedFort","Delhi",800,"fort");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into tourist_place values("1006","lotus temple","Delhi",900,"temple");
+Query OK, 1 row affected (0.00 sec)
+
+
+
+
+
+
+
+
+mysql> desc tourist;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| tid     | varchar(20) | NO   | PRI | NULL    |       |
+| name    | char(20)    | NO   |     | NULL    |       |
+| age     | int         | NO   |     | NULL    |       |
+| country | char(20)    | NO   |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+
+ysql> insert into tourist values("t001","sagar",45,"india");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into tourist values("t002","sharadi",35,"canada");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into tourist values("t003","ragav",85,"USA");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into tourist values("t004","rakesh",45,"USA");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into tourist values("t005","sarika",65,"UK");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into tourist values("t006","shraddha",35,"singaphore");
+Query OK, 1 row affected (0.00 sec)
+
+
+
+
+
+
+
+mysql> desc visits;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| tid   | varchar(20) | NO   | MUL | NULL    |       |
+| tpid  | varchar(20) | NO   | MUL | NULL    |       |
+| vdate | date        | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+
+
+mysql> desc visits;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| tid   | varchar(20) | NO   | MUL | NULL    |       |
+| tpid  | varchar(20) | NO   | MUL | NULL    |       |
+| vdate | date        | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select*from tourist;
++------+----------+-----+------------+
+| tid  | name     | age | country    |
++------+----------+-----+------------+
+| t001 | sagar    |  45 | india      |
+| t002 | sharadi  |  35 | canada     |
+| t003 | ragav    |  85 | USA        |
+| t004 | rakesh   |  45 | USA        |
+| t005 | sarika   |  65 | UK         |
+| t006 | shraddha |  35 | singaphore |
++------+----------+-----+------------+
+6 rows in set (0.00 sec)
+
+
+
+mysql> insert into vistis values("t001","1001",'2020-12-12');
+ERROR 1146 (42S02): Table 'VP21MC046_tourist.vistis' doesn't exist
+mysql> insert into vistis values("t001","1002",'2020-12-12');
+ERROR 1146 (42S02): Table 'VP21MC046_tourist.vistis' doesn't exist
+mysql> insert into vistis values("t002","1001",'2020-12-12');
+ERROR 1146 (42S02): Table 'VP21MC046_tourist.vistis' doesn't exist
+mysql> insert into vistis values("t002","1002",'2020-11-12');
+ERROR 1146 (42S02): Table 'VP21MC046_tourist.vistis' doesn't exist
+mysql> select*from visits;
+Empty set (0.00 sec)
+
+
+
+
+mysql> insert into visits values("t001","1001",'2020-20-12');
+ERROR 1292 (22007): Incorrect date value: '2020-20-12' for column 'vdate' at row 1
+mysql> insert into visits values("t001","1001",'2020-08-10');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into visits values("t001","1002",'2020-08-10');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into visits values("t001","1003",'2020-08-10');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into tourist_place values("1009","hampi","karnataka",200,"fort");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into visits values("t001","1009",'2020-08-10');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into visits values("t002","1009",'2020-08-10');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into visits values("t003","1009",'2020-09-10');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into visits values("t004","1009",'2020-09-11');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into visits values("t001","1008",'2020-09-11');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into visits values("t002","1008",'2020-03-11');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into visits values("t003","1008",'2020-03-21');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into visits values("t004","1008",'2020-03-25');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into visits values("t005","1008",'2020-03-25');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into visits values("t006","1008",'2020-03-25');
+Query OK, 1 row affected (0.00 sec)
+
+
+mysql> select*from emailid;
++------+---------------+
+| tid  | emailid       |
++------+---------------+
+| t001 | shr@132       |
+| t002 | arrhr@132     |
+| t003 | jkarrhr@892   |
+| t003 | dfsghr@452    |
+| t004 | abc@452       |
+| t006 | arrdfaersc@34 |
+| t005 | arrsc@34      |
++------+---------------+
+7 rows in set (0.00 sec)
+
+
+i. List the state name which is having maximum number of tourist places.
+
+mysql> select state,count(tpid) from tourist_place group by state order by count(tpid)desc limit 1;
++-----------+-------------+
+| state     | count(tpid) |
++-----------+-------------+
+| karnataka |           4 |
++-----------+-------------+
+
+mysql> select state from tourist_place group by state having count(*)=(select count(*)from tourist_place group by state order by count(state)desc limit 1);
++-----------+
+| state     |
++-----------+
+| karnataka |
+| Delhi     |
++-----------+
+
+ii. List details of Tourist place where maximum number of tourists visited.
+mysql> select*from tourist_place 
+    -> where tpid
+    -> =(select tpid from visits
+    -> group by tpid order by count(tpid)desc limit 1);
++------+--------+----------+-----+---------+
+| tpid | name   | state    | KM  | history |
++------+--------+----------+-----+---------+
+| 1008 | shimla | kashmira | 900 | snow    |
++------+--------+----------+-----+---------+
+1 row in set (0.00 sec)
+
+
+
+iii. List the details of tourists visited all tourist places of the state “KARNATAKA”.
+
+mysql> select*from tourist where tid in(select tid from visits,tourist_place where visits.tpid=tourist_place.tpid and state="karnataka" group
+by tid having count(state)in(select count(state)from tourist_place where state="karnataka"));
++------+-------+-----+---------+
+| tid  | name  | age | country |
++------+-------+-----+---------+
+| t001 | sagar |  45 | india   |
++------+-------+-----+---------+(VISITI THE PLACE ONE TIME).
+
+mysql> select*from tourist where tid in(select tid from visits,tourist_place where visits.tpid=tourist_place.tpid and state="karnataka" group
+by tid having count(distinct tourist_place.tpid)in(select count(tpid)from tourist_place where state="karnataka"));
++------+-------+-----+---------+
+| tid  | name  | age | country |
++------+-------+-----+---------+
+| t001 | sagar |  45 | india   |
++------+-------+-----+---------+(VISIT BY THE PERSON MORE THAN ONE TIME)
+
+
+
+iv. Display the details of the tourists visited at least one tourist place of the state, but visited
+all states tourist places.
+
+mysql> select * from tourist where tid in(select tid from visits,tourist_place where visits.tpid=tourist_place.tpid group by tid having count(distinct state)in(select count(distinct state)from tourist_place));
++------+----------+-----+------------+
+| tid  | name     | age | country    |
++------+----------+-----+------------+
+| t001 | sagar    |  45 | india      |
+| t006 | shraddha |  35 | singaphore |
++------+----------+-----+------------+
+2 rows in set (0.00 sec)
+
+
+
+
+v. Display the details of the tourist place visited by the tourists of all country.
+
+mysql> select*from tourist_place where tpid in(select tpid from visits,tourist where visits.tid=tourist.tid group by tpid having count(distinct country)=(select count(distinct country)from tourist));
++------+--------+----------+-----+---------+
+| tpid | name   | state    | KM  | history |
++------+--------+----------+-----+---------+
+| 1008 | shimla | kashmira | 900 | snow    |
++------+--------+----------+-----+---------+
+1 row in set (0.00 sec)
+
+**************ELECTION********************
+
+5. A country wants to conduct an election for the parliament. A country having many
+constituencies. Each constituency is identified uniquely by Constituency_id, having the
+Name, belongs to a state,Number_of_voters. A constituency can have many voters. Each voter
+is uniquely identified by using Voter_id, having the Name, age, address (involves
+Houseno,city,state,pincode). Each voter belongs to only one constituency. There are many
+candidates contesting in the election. Each candidates are uniquely identified by using
+candidate_id, having Name, phone_no, age, state. A candidate belongs to only one
+party.Thereare many parties. Each party is uniquely identified by using Party_id, having
+Party_Name,Party_symbol. A candidate can contest from many constituencies under a same
+party. A party can have many candidates contesting from different constituencies. No
+constituency having the candidates from the same party. A constituency can have many
+contesting candidates belongs to different parties. Each voter votes only one candidate of
+his/her constituencty.
+
+
+costituency:
+
+mysql> create table costituencey(consid number(20)primary key,csname varchar(20),cstate varchar?(20),;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'number(20)primary key,csname varchar(20),cstate varchar?(20),' at line 1
+mysql> create database VP21MC046_ELECTION;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> desc costituencey;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| consid       | int         | NO   | PRI | NULL    |       |
+| csname       | varchar(20) | YES  |     | NULL    |       |
+| cstate       | varchar(20) | YES  |     | NULL    |       |
+| no_of_voters | int         | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+
+*************party***********
+mysql> create table party(pid int(10)primary key,pname varchar(20),psymbol varchar(10));
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+
+mysql> desc party;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| pid     | int         | NO   | PRI | NULL    |       |
+| pname   | varchar(20) | YES  |     | NULL    |       |
+| psymbol | varchar(10) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+*********
+
+**************candidates*********
+
+mysql> create table candidates
+(candid int(12)primary key not null,
+phone_no char(12),age int(3),
+state varchar(20),name varchar(20),
+pid int(10),
+foreign key(pid)references party(pid));
+
+Query OK, 0 rows affected, 3 warnings (0.03 sec)
+
+mysql> desc candidates;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| candid   | int         | NO   | PRI | NULL    |       |
+| phone_no | char(12)    | YES  |     | NULL    |       |
+| age      | int         | YES  |     | NULL    |       |
+| state    | varchar(20) | YES  |     | NULL    |       |
+| name     | varchar(20) | YES  |     | NULL    |       |
+| pid      | int         | YES  | MUL | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+**********************contests*************
+
+mysql> create table contest
+(cont_id int(10),
+candid int(10),
+consid int(10),
+foreign key(candid)references candidates(candid),
+foreign key(consid)references costituencey(consid));
+
+Query OK, 0 rows affected, 3 warnings (0.03 sec)
+
+mysql> desc contest;
++---------+------+------+-----+---------+-------+
+| Field   | Type | Null | Key | Default | Extra |
++---------+------+------+-----+---------+-------+
+| cont_id | int  | YES  |     | NULL    |       |
+| candid  | int  | YES  | MUL | NULL    |       |
+| consid  | int  | YES  | MUL | NULL    |       |
++---------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+*********************voters********************
+
+mysql> create table voters
+(vid int(10)primary key not null,
+vname varchar(20)not null,
+age int(3)not null,
+house_no int(10),
+city varchar(20),
+state varchar(20),
+pincode int(15)not null,
+consid int(10),
+candid int(10),
+foreign key(consid)references constituency(consid),
+foreign key(candid)references candidates(candid));
+
+
+Query OK, 0 rows affected, 6 warnings (0.03 sec)
+
+mysql> desc voters;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| vid      | int         | NO   | PRI | NULL    |       |
+| vname    | varchar(20) | NO   |     | NULL    |       |
+| age      | int         | NO   |     | NULL    |       |
+| house_no | int         | YES  |     | NULL    |       |
+| city     | varchar(20) | YES  |     | NULL    |       |
+| state    | varchar(20) | YES  |     | NULL    |       |
+| pincode  | int         | NO   |     | NULL    |       |
+| consid   | int         | YES  | MUL | NULL    |       |
+| candid   | int         | YES  | MUL | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+9 rows in set (0.01 sec)
+
+*******************Insert_Constituency***********
+
+mysql> insert into constituency values(50,"Delhi","UP)",400);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into constituency values(60,"Mangalore","Karnataka",600);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select*from constituency;
++--------+-----------+------------+--------------+
+| consid | csname    | cstate     | no_of_voters |
++--------+-----------+------------+--------------+
+|     10 | shimla    | Kashmir    |          200 |
+|     20 | Thrishur  | Kerala     |          200 |
+|     30 | Pune      | Bihar      |          300 |
+|     40 | Puducheri | Thamilnadu |          500 |
+|     50 | Delhi     | UP)        |          400 |
+|     60 | Mangalore | Karnataka  |          600 |
++--------+-----------+------------+--------------+
+6 rows in set (0.00 sec)
+
+
+i. List the details of the candidates who are contesting from more than one constituencies
+which are belongs to different states.
+
+select*from candidates where candid in(
+select candid from contest,constituency 
+where contest.consid=constituency.consid 
+group by candid having count(distinct(cstate))>1);
++--------+--------------+------+-----------+---------+------+--------+
+| candid | phone_no     | age  | state     | name    | pid  | consid |
++--------+--------------+------+-----------+---------+------+--------+
+|    111 | 990000909090 |   35 | karnataka | shradda |  101 |     10 |
+|    222 | 990000909090 |   50 | karnataka | vriddhi |  102 |     20 |
++--------+--------------+------+-----------+---------+------+--------+
+2 rows in set (0.00 sec)
+
+
+
+ii. Display the state name having maximum number of constituencies.
+iii. Create a stored procedure to insert the tuple into the voter table by checking the voter
+age. If voter’s age is at least 18 years old, then insert the tuple into the voter else display the
+“Not an eligible voter msg” .
+iv. Create a stored procedure to display the number_of_voters in the specified constituency.
+Where the constituency name is passed as an argument to the stored procedure.
+v. Create a TRIGGER to UPDATE the count of “ Number_of_voters” of the respective
+constituency in “CONSTITUENCY” table , AFTER inserting a tuple into the “VOTERS” table.
